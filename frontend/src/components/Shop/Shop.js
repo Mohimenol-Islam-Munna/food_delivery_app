@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Nav, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import Footer from "../Footer/Footer";
@@ -12,10 +12,6 @@ const Shop = () => {
   const shop = useSelector((state) => state.shop);
 
   const dispatch = useDispatch();
-
-  console.log("shop", shop);
-
-  const shp = [1, 2, 3, 4, 5];
 
   useEffect(() => {
     dispatch(getShopProducts(token));
@@ -75,95 +71,100 @@ const Shop = () => {
             fontWeight: 700,
             borderBottom: "2px solid grey",
             paddingBottom: 20,
+            textTransform: "uppercase",
           }}
         >
-          SAN DIEGO BURGER CO
+          {shop.length > 0 ? shop[0].user.name : ""}
         </h2>
 
         <div style={{ marginTop: 25 }}>
           <Row>
-            {shp.map((product) => (
-              <Col style={{ marginBottom: "50px" }} md={4} sm={6}>
-                <div>
-                  <div style={{ height: 200, backgroundColor: "black" }}></div>
+            {shop.map((product, i) => {
+              return (
+                <Col style={{ marginBottom: "50px" }} md={4} sm={6} key={i}>
+                  <div>
+                    <div style={{ height: "200px" }}>
+                      <img src={product.image} width="100%" height="auto" />
+                    </div>
 
-                  <div
-                    style={{
-                      display: "flex",
-                      marginTop: 15,
-                      justifyContent: "space-between",
-                      marginBottom: 30,
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: 100,
-                        height: 40,
-                        backgroundColor: "orange",
-                      }}
-                    >
-                      <h3 style={{ color: "white" }}>MEAT</h3>
-                    </div>
-                    <div>
-                      <Nav.Link href="/home">
-                        <h4 style={{ fontWeight: 700, color: "black" }}>
-                          Cheeseburger W/ Chips
-                        </h4>
-                      </Nav.Link>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "end",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div style={{ textAlign: "left", width: "45%" }}>
-                      <h2 style={{ fontWeight: 700 }}>$11.99</h2>
-                      <h5 style={{ color: "grey" }}>+$2 delivery + tax</h5>
-                    </div>
                     <div
                       style={{
                         display: "flex",
-                        border: "2px solid grey",
-                        width: "50%",
-                        borderRadius: 9,
+                        marginTop: 15,
+                        justifyContent: "space-between",
+                        marginBottom: 30,
                       }}
                     >
-                      <div>
-                        <Form.Group as={Col} controlId="formGridState">
-                          <Form.Select
-                            style={{
-                              borderRight: "2px solid grey",
-                              borderTopLeftRadius: 8,
-                              borderBottomLeftRadius: 8,
-                            }}
-                            defaultValue="Choose..."
-                          >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                          </Form.Select>
-                        </Form.Group>
+                      <div
+                        style={{
+                          width: 100,
+                          height: 40,
+                          backgroundColor: "orange",
+                        }}
+                      >
+                        <h3 style={{ color: "white" }}>{product.name}</h3>
                       </div>
-                      <div style={{ margin: "auto" }}>
-                        <button
-                          style={{
-                            backgroundColor: "transparent",
-                            border: "transparent",
-                          }}
-                        >
-                          order
-                        </button>
+                      <div>
+                        <Nav.Link href="/home">
+                          <h4 style={{ fontWeight: 700, color: "black" }}>
+                            {product.description}
+                          </h4>
+                        </Nav.Link>
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "end",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div style={{ textAlign: "left", width: "45%" }}>
+                        <h2 style={{ fontWeight: 700 }}>{product.price}</h2>
+                        <h5 style={{ color: "grey" }}>+$2 delivery + tax</h5>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          border: "2px solid grey",
+                          width: "50%",
+                          borderRadius: 9,
+                        }}
+                      >
+                        <div>
+                          <Form.Group as={Col} controlId="formGridState">
+                            <Form.Select
+                              style={{
+                                borderRight: "2px solid grey",
+                                borderTopLeftRadius: 8,
+                                borderBottomLeftRadius: 8,
+                              }}
+                              defaultValue="Choose..."
+                            >
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                            </Form.Select>
+                          </Form.Group>
+                        </div>
+                        <div style={{ margin: "auto" }}>
+                          <button
+                            style={{
+                              backgroundColor: "transparent",
+                              border: "transparent",
+                            }}
+                          >
+                            order
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Col>
-            ))}
+                </Col>
+              );
+            })}
           </Row>
           <div
             style={{

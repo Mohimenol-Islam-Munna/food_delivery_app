@@ -99,9 +99,9 @@ def restaurant(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated]) 
 def getItems(request):
-    user = request.user
+    # user = request.user 
     
     query = request.query_params.get('keyword')
     if query == None:
@@ -111,11 +111,13 @@ def getItems(request):
     if cuery == None:
         cuery = ''
 
-    items = Item.objects.select_related('user').select_related('dish_type').select_related('item_type').all().filter(dish_type__name=user.dish_type,
-                                        name__icontains=query, user__city__icontains=cuery)
+    items = Item.objects.select_related('user').select_related('dish_type').select_related('item_type').all().filter(name__icontains=query, user__city__icontains=cuery)
 
     serializer = ItemSerializer(items, many=True)
     return Response(serializer.data)
+
+
+    # dish_type__name=user.dish_type,
 
 
 

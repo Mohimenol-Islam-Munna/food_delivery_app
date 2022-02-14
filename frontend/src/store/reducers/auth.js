@@ -32,10 +32,10 @@ const auth = (state = initialState, action) => {
       };
 
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", payload.access);
+      localStorage.setItem("token", JSON.stringify(payload.access));
       return {
         ...state,
-        token: payload.token,
+        token: payload.access,
         isAuthenticated: true,
         user: payload,
       };

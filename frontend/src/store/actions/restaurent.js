@@ -16,8 +16,6 @@ export const getRestaurents = () => {
         config
       );
 
-      console.log("restaurent data ::", res.data);
-
       dispatch({
         type: FETCH_RESTAURENT_DATA,
         payload: res.data,
